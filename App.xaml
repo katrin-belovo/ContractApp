@@ -103,6 +103,11 @@
                     
                     <!--Активный пункт меню-->
                     <Style x:Key="ActiveMenuButton" TargetType="Button" BasedOn="{StaticResource MainMenuButton}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#FFEDE7F6"/>
+                            </Trigger>
+                        </Style.Triggers>
                         <Setter Property="Background" Value="#FFD1C4E9"/>
                         <!-- Светло-фиолетовый -->
                         <Setter Property="Foreground" Value="#FF311B92"/>
