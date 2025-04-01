@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContractApp.Views.Pages;
+using MaterialDesignThemes.Wpf;
 
 
 namespace ContractApp
@@ -67,7 +68,7 @@ namespace ContractApp
         private void SetActiveButton(Button button)
         {
 
-            
+
             if (_activeButton != null)
             {
                 _activeButton.ClearValue(Button.StyleProperty); // Сбрасываем явно
@@ -126,5 +127,47 @@ namespace ContractApp
             SetActiveButton((Button)sender);
             SetActiveButton(ContingentBtn);
         }
+
+
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                ((Button)sender).Content = new PackIcon { Kind = PackIconKind.WindowMaximize };
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+                ((Button)sender).Content = new PackIcon { Kind = PackIconKind.WindowRestore };
+            }
+        }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // Перемещение окна при захвате заголовка
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (e.ClickCount == 2) // Двойной клик для максимизации
+                {
+                    MaximizeWindow(null, null);
+                }
+                else
+                {
+                    this.DragMove();
+                }
+            }
+        }
     }
+
 }

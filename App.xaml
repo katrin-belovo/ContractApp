@@ -41,7 +41,6 @@
 
                                                 <!-- Icon -->
                                                 <materialDesign:PackIcon Grid.Column="0"
-                                                                         Kind="FileDocument"
                                                                          Width="20"
                                                                          Height="20"
                                                                          VerticalAlignment="Center"
@@ -100,7 +99,7 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                    
+
                     <!--Активный пункт меню-->
                     <Style x:Key="ActiveMenuButton" TargetType="Button" BasedOn="{StaticResource MainMenuButton}">
                         <Style.Triggers>
@@ -110,7 +109,7 @@
                         </Style.Triggers>
                         <Setter Property="Background" Value="#FFD1C4E9"/>
                         <!-- Светло-фиолетовый -->
-                        <Setter Property="Foreground" Value="#FF311B92"/>
+                        <Setter Property="Foreground" Value="#FFA24AAB"/>
                     </Style>
 
                 </ResourceDictionary>

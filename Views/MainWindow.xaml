@@ -3,59 +3,188 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ContractApp.Views.Pages"
-        Title="Main Window" 
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
         Height="600" 
         Width="800">
 
+    <Window.Resources>
+        <!-- Стиль для кнопок управления окном (оставляем как было) -->
+        <Style x:Key="WindowControlButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource MaterialDesignBody}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="4" 
+                                   Opacity="0.2" 
+                                   ShadowDepth="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!-- Фон с анимацией -->
+                            <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3"
+                                Opacity="0.8">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" 
+                                    Property="Background" 
+                                    Value="#FFEDE7F6"/>
+                                <!-- Светло-фиолетовый -->
+                                <Setter TargetName="border" 
+                                    Property="Opacity" 
+                                    Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-    <!-- Основной контент -->
+        <!-- Специальный стиль для кнопки закрытия -->
+        <Style x:Key="CloseWindowButton" 
+           TargetType="Button" 
+           BasedOn="{StaticResource WindowControlButton}">
+            <Setter Property="Foreground" Value="#FF311B92"/>
+            <!-- Темно-фиолетовый -->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#D32F2F"/>
+                    <!-- Красный при наведении -->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
+        <!-- Новая структура с заголовком -->
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <!-- Панель заголовка -->
             <RowDefinition Height="Auto"/>
+            <!-- Наше меню -->
             <RowDefinition Height="*"/>
+            <!-- Основной контент -->
         </Grid.RowDefinitions>
 
-        <!-- Навигационное меню -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
-            <!-- Меню "Договоры" -->
-            <Grid>
-                <Button x:Name="ContractsBtn" 
-                        Style="{StaticResource MainMenuButton}"
-                        Tag="Договоры"
-                        Click="ToggleContractsMenu">
-                    <materialDesign:PackIcon Kind="ChevronDown"/>
+        <!-- Панель заголовка (оставляем как было) -->
+        <Grid Grid.Row="0" 
+      Background="#FFF" 
+      MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Название приложения с иконкой -->
+            <StackPanel Orientation="Horizontal" 
+                VerticalAlignment="Center" 
+                Margin="15 0">
+                <materialDesign:PackIcon Kind="ListBoxOutline" 
+                               Width="24"
+                               Height="24"
+                               Foreground="#FF673AB7"/>
+                <!-- Основной фиолетовый -->
+                <TextBlock Text="ContractApp" 
+                   Margin="10 0 0 0"
+                   FontSize="16"
+                   Foreground="#FF311B92" 
+                   FontWeight="SemiBold"/>
+            </StackPanel>
+
+            <!-- Кнопки управления окном -->
+            <StackPanel Grid.Column="1" 
+                Orientation="Horizontal" 
+                Margin="0 0 5 0">
+                <!-- Кнопка сворачивания -->
+                <Button Style="{StaticResource WindowControlButton}"
+                Click="MinimizeWindow">
+                    <materialDesign:PackIcon Kind="WindowMinimize" 
+                                   Width="16"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
                 </Button>
 
-                <!-- Подменю договоров -->
+                <!-- Кнопка разворачивания -->
+                <Button Style="{StaticResource WindowControlButton}"
+                Click="MaximizeWindow"
+                x:Name="MaximizeButton">
+                    <materialDesign:PackIcon Kind="WindowMaximize" 
+                                   Width="16"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                </Button>
+
+                <!-- Кнопка закрытия -->
+                <Button Style="{StaticResource CloseWindowButton}"
+                Click="CloseWindow">
+                    <materialDesign:PackIcon Kind="WindowClose" 
+                                   Width="18"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Восстанавливаем оригинальное меню -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FFF">
+            <!-- Меню "Договоры" -->
+
+            <Grid>
+                <!-- ... ваш оригинальный код для меню договоров ... -->
+                <Button x:Name="ContractsBtn" 
+                    Style="{StaticResource MainMenuButton}"
+                    Tag="Договоры"
+                    Click="ToggleContractsMenu">
+                    <materialDesign:PackIcon Kind="FileDocumentEdit" 
+                        Width="20"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        Margin="0 0 8 0" Grid.Column="0"/>
+
+                </Button>
+
+
                 <Popup x:Name="ContractsPopup"
                        Style="{StaticResource SubMenuStyle}"
-                       PlacementTarget="{Binding ElementName=ContractsMenu}">
+                       PlacementTarget="{Binding ElementName=ContractsBtn}">
+                    <!-- ... содержимое попапа ... -->
                     <Border Background="White"
-                            CornerRadius="4"
-                            Effect="{StaticResource MaterialDesignShadowDepth2}"
-                            Padding="2">
+        CornerRadius="4"
+        Effect="{StaticResource MaterialDesignShadowDepth2}"
+        Padding="2">
                         <StackPanel>
                             <Button Style="{StaticResource SubMenuItem}"
-                                    Click="ShowContractsList"
-                                    Tag="ContractsList">
+                Click="ShowContractsList"
+                Tag="ContractsList">
                                 <StackPanel Orientation="Horizontal" >
                                     <materialDesign:PackIcon Kind="FormatListBulleted" 
-                                                           Width="20"
-                                                           Margin="0 0 10 0"
-                                                           VerticalAlignment="Center"/>
+                                       Width="20"
+                                       Margin="0 0 10 0"
+                                       VerticalAlignment="Center"/>
                                     <TextBlock Text="Список договоров"
-                                               VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                             <Button Style="{StaticResource SubMenuItem}"
-                                    Click="ShowContractSettings"
-                                    Tag="ContractSettings">
+                Click="ShowContractSettings"
+                Tag="ContractSettings">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cog" 
-                                                           Width="20"
-                                                           Margin="0 0 10 0"/>
+                                       Width="20"
+                                       Margin="0 0 10 0"/>
                                     <TextBlock Text="Настройка договоров"
-                                               VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -65,31 +194,35 @@
 
             <!-- Меню "Справочники" -->
             <Grid Margin="5 0">
+                <!-- ... ваш оригинальный код для меню справочников ... -->
                 <Button Style="{StaticResource MainMenuButton}"
-                            x:Name="DirectoriesBtn"
-                            Tag="Справочники"
-                            Click="ToggleDirectoriesMenu">
-                    <materialDesign:PackIcon Kind="ChevronDown"/>
+            x:Name="DirectoriesBtn"
+            Tag="Справочники"
+            Click="ToggleDirectoriesMenu">
+                    <materialDesign:PackIcon Kind="BookOpenOutline" 
+                           Width="20"
+                           Height="20"
+                           VerticalAlignment="Center"/>
                 </Button>
 
                 <Popup x:Name="DirectoriesPopup"
-                           Style="{StaticResource SubMenuStyle}"
-                           PlacementTarget="{Binding ElementName=DirectoriesMenu}">
+           Style="{StaticResource SubMenuStyle}"
+           PlacementTarget="{Binding ElementName=DirectoriesBtn}">
                     <Border Background="White"
-                                CornerRadius="4"
-                                Effect="{StaticResource MaterialDesignShadowDepth2}">
+                CornerRadius="4"
+                Effect="{StaticResource MaterialDesignShadowDepth2}">
                         <StackPanel Margin="2">
                             <Button Style="{StaticResource SubMenuItem}"
-                                        Click="ShowDirections"
-                                        Tag="DirectionsPage">
+                        Click="ShowDirections"
+                        Tag="DirectionsPage">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Compass" Margin="0 0 8 0"/>
                                     <TextBlock Text="Направления"/>
                                 </StackPanel>
                             </Button>
                             <Button Style="{StaticResource SubMenuItem}"
-                                        Click="ShowGroups"
-                                        Tag="GroupsPage">
+                        Click="ShowGroups"
+                        Tag="GroupsPage">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="AccountGroup" Margin="0 0 8 0"/>
                                     <TextBlock Text="Управление группами"/>
@@ -102,15 +235,16 @@
 
             <!-- Кнопка "Контингент" -->
             <Button Style="{StaticResource MainMenuButton}"
-                        x:Name="ContingentBtn"
-                        Tag="Контингент"
-                        Click="ShowContingent"
-                        Margin="5 0" Width="125"/>
+                   x:Name="ContingentBtn"
+                   Tag="Контингент"
+                   Click="ShowContingent"
+                   Margin="5 0" 
+                   Width="125" />
         </StackPanel>
 
-        <!-- Область контента -->
+        <!-- Область контента (переносим ваш оригинальный Frame) -->
         <Frame x:Name="MainFrame"
-               Grid.Row="1"
+               Grid.Row="2"
                NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

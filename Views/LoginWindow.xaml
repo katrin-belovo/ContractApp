@@ -20,7 +20,7 @@
                     Click="Login_Click"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Foreground="White"
-                    Background="Purple"
+                    Background="#7400b8"
                     Padding="20 5"/>
 
             <TextBlock x:Name="ErrorMessage" 
