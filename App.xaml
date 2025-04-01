@@ -15,6 +15,8 @@
                 <ResourceDictionary>
                     <!-- Конвертер -->
                     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+                    <!-- В ресурсы App.xaml -->
+                    <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     <!-- Main Menu Button Style -->
                     <Style x:Key="MainMenuButton" TargetType="Button">
                         <Setter Property="Background" Value="#FF673AB7"/>
@@ -40,11 +42,11 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <!-- Icon -->
-                                                <materialDesign:PackIcon Grid.Column="0"
-                                                                         Width="20"
-                                                                         Height="20"
-                                                                         VerticalAlignment="Center"
-                                                                         Margin="0 0 8 0"/>
+                                                <!-- Icon -->
+                                                <ContentPresenter Grid.Column="0"
+                                                           Content="{TemplateBinding Content}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0 0 8 0"/>
 
                                                 <!-- Text -->
                                                 <TextBlock Grid.Column="1"
@@ -53,12 +55,14 @@
 
                                                 <!-- Chevron (only for items with submenu) -->
                                                 <materialDesign:PackIcon Grid.Column="2"
-                                                                         Kind="ChevronDown"
-                                                                         Width="16"
-                                                                         Height="16"
-                                                                         Margin="8 0 0 0"
-                                                                         VerticalAlignment="Center"
-                                                                         Visibility="{TemplateBinding Content, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                         Kind="ChevronDown"
+                                         Width="16"
+                                         Height="16"
+                                         Margin="8 0 0 0"
+                                         VerticalAlignment="Center"
+                                         Visibility="{Binding Path=(local:ButtonExtensions.HasDropDown), 
+                                                     RelativeSource={RelativeSource AncestorType=Button}, 
+                                                     Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                             </Grid>
                                         </Border>
                                     </Grid>

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ContractApp.Views.Pages"
+        xmlns:utils="clr-namespace:ContractApp.Utilities"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
@@ -142,18 +143,17 @@
 
             <Grid>
                 <!-- ... ваш оригинальный код для меню договоров ... -->
+                <!-- Кнопка "Договоры" -->
+                <!-- Кнопка "Договоры" -->
                 <Button x:Name="ContractsBtn" 
-                    Style="{StaticResource MainMenuButton}"
-                    Tag="Договоры"
-                    Click="ToggleContractsMenu">
+        utils:ButtonExtensions.HasDropDown="True"
+        Style="{StaticResource MainMenuButton}"
+        Tag="Договоры"
+        Click="ToggleContractsMenu">
                     <materialDesign:PackIcon Kind="FileDocumentEdit" 
-                        Width="20"
-                        Height="20"
-                        VerticalAlignment="Center"
-                        Margin="0 0 8 0" Grid.Column="0"/>
-
+                             Width="20"
+                             Height="20"/>
                 </Button>
-
 
                 <Popup x:Name="ContractsPopup"
                        Style="{StaticResource SubMenuStyle}"
@@ -195,14 +195,17 @@
             <!-- Меню "Справочники" -->
             <Grid Margin="5 0">
                 <!-- ... ваш оригинальный код для меню справочников ... -->
+
+                <!-- Кнопка "Справочники" -->
+                <!-- Кнопка "Справочники" -->
                 <Button Style="{StaticResource MainMenuButton}"
-            x:Name="DirectoriesBtn"
-            Tag="Справочники"
-            Click="ToggleDirectoriesMenu">
+        utils:ButtonExtensions.HasDropDown="True"
+        x:Name="DirectoriesBtn"
+        Tag="Справочники"
+        Click="ToggleDirectoriesMenu">
                     <materialDesign:PackIcon Kind="BookOpenOutline" 
-                           Width="20"
-                           Height="20"
-                           VerticalAlignment="Center"/>
+                             Width="20"
+                             Height="20"/>
                 </Button>
 
                 <Popup x:Name="DirectoriesPopup"
@@ -235,11 +238,15 @@
 
             <!-- Кнопка "Контингент" -->
             <Button Style="{StaticResource MainMenuButton}"
-                   x:Name="ContingentBtn"
-                   Tag="Контингент"
-                   Click="ShowContingent"
-                   Margin="5 0" 
-                   Width="125" />
+                x:Name="ContingentBtn"
+                Tag="Контингент"
+                Click="ShowContingent"
+                Margin="5 0" 
+                Width="125">
+                <materialDesign:PackIcon Kind="AccountGroup" 
+                             Width="20"
+                             Height="20"/>
+            </Button>
         </StackPanel>
 
         <!-- Область контента (переносим ваш оригинальный Frame) -->

@@ -28,6 +28,14 @@ namespace ContractApp
             set { SetValue(ActiveButtonTagProperty, value); }
         }
 
+        public static class ButtonExtensions
+        {
+            public static readonly DependencyProperty HasDropDownProperty =
+                DependencyProperty.RegisterAttached("HasDropDown", typeof(bool), typeof(ButtonExtensions), new PropertyMetadata(false));
+
+            public static bool GetHasDropDown(DependencyObject obj) => (bool)obj.GetValue(HasDropDownProperty);
+            public static void SetHasDropDown(DependencyObject obj, bool value) => obj.SetValue(HasDropDownProperty, value);
+        }
 
         public static readonly DependencyProperty ActiveButtonTagProperty =
             DependencyProperty.Register("ActiveButtonTag", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
