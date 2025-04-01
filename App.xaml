@@ -17,6 +17,9 @@
                     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
                     <!-- В ресурсы App.xaml -->
                     <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+                    <!--STYLES MENU-->
+
                     <!-- Main Menu Button Style -->
                     <Style x:Key="MainMenuButton" TargetType="Button">
                         <Setter Property="Background" Value="#FF673AB7"/>
@@ -111,10 +114,12 @@
                                 <Setter Property="Foreground" Value="#FFEDE7F6"/>
                             </Trigger>
                         </Style.Triggers>
-                        <Setter Property="Background" Value="#FFD1C4E9"/>
+                        <Setter Property="Background" Value="#FFA24AAB"/> 
                         <!-- Светло-фиолетовый -->
-                        <Setter Property="Foreground" Value="#FFA24AAB"/>
+                        <Setter Property="Foreground" Value="White"/>
                     </Style>
+                    
+                    <!--END STYLES MENU-->
 
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
