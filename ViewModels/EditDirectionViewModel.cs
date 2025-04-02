@@ -14,7 +14,7 @@ namespace ContractApp.ViewModels
         private Direction _direction;
         private string _errorMessage;
         private bool _hasError;
-
+        public bool IsEditing => _direction.Id != 0;
         public EditDirectionViewModel(Direction direction)
         {
             _direction = direction;
@@ -49,6 +49,16 @@ namespace ContractApp.ViewModels
             set
             {
                 _direction.ShortName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string Level
+        {
+            get => _direction.Level;
+            set
+            {
+                _direction.Level = value;
                 RaisePropertyChanged();
             }
         }
@@ -105,14 +115,18 @@ namespace ContractApp.ViewModels
         {
             var errors = new List<string>();
 
-            if (!Regex.IsMatch(Code, @"^\d{2}\.\d{2}\.\d{2}$"))
-                errors.Add("Неверный формат кода направления");
 
             if (string.IsNullOrWhiteSpace(FullName))
                 errors.Add("Укажите полное название");
 
             if (string.IsNullOrWhiteSpace(ShortName) || ShortName.Length > 10)
                 errors.Add("Короткое название должно быть 1-10 символов");
+
+            if (string.IsNullOrEmpty(Level))
+                errors.Add("Выберите уровень образования");
+
+            if (!new[] { "ВО", "СПО" }.Contains(Level))
+                errors.Add("Некорректный уровень образования");
 
             if (errors.Any())
             {

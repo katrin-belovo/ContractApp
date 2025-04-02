@@ -49,7 +49,8 @@ namespace ContractApp.Infrastructure
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Code TEXT NOT NULL UNIQUE,
                 FullName TEXT NOT NULL,
-                ShortName TEXT NOT NULL CHECK(LENGTH(ShortName) <= 10))",
+                ShortName TEXT NOT NULL CHECK(LENGTH(ShortName) <= 10),
+                Level TEXT NOT NULL CHECK(Level IN ('ВО', 'СПО')))",
 
             @"CREATE TABLE Groups (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,

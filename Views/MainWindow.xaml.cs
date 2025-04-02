@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContractApp.Views;
 using ContractApp.Views.Pages;
 using MaterialDesignThemes.Wpf;
 
@@ -44,6 +45,7 @@ namespace ContractApp
         {
             InitializeComponent();
             MainFrame.Navigated += OnNavigated;
+            Closing += MainWindow_Closing;
         }
 
         private void OnNavigated(object sender, NavigationEventArgs e)
@@ -159,6 +161,18 @@ namespace ContractApp
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var dialog = new ConfirmationDialog("Вы действительно хотите закрыть программу?");
+            dialog.Owner = this;
+            dialog.ShowDialog();
+
+            if (dialog.DialogResult != true)
+            {
+                e.Cancel = true;
+            }
         }
 
         // Перемещение окна при захвате заголовка

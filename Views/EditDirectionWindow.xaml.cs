@@ -34,13 +34,48 @@ namespace ContractApp.Views
 
         private void CodeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var text = CodeBox.Text.Replace(".", "");
-            if (text.Length >= 2) text = text.Insert(2, ".");
-            if (text.Length >= 5) text = text.Insert(5, ".");
-            if (CodeBox.Text != text)
+            var textBox = sender as TextBox;
+            if (string.IsNullOrEmpty(textBox.Text)) return;
+
+            var originalText = textBox.Text;
+            var caretIndex = textBox.CaretIndex;
+
+            // Удаляем все точки и нецифровые символы
+            var cleanText = new string(originalText.Where(char.IsDigit).ToArray());
+
+            // Форматируем по шаблону XX.XX.XX
+            var formattedText = new StringBuilder();
+            for (int i = 0; i < cleanText.Length; i++)
             {
-                CodeBox.Text = text;
-                CodeBox.CaretIndex = text.Length;
+                if (i == 2 || i == 4) formattedText.Append('.');
+                if (i >= 6) break; // Максимум 6 цифр
+                formattedText.Append(cleanText[i]);
+            }
+
+            // Обновляем текст только если есть изменения
+            if (originalText != formattedText.ToString())
+            {
+                textBox.Text = formattedText.ToString();
+
+                // Корректируем позицию курсора
+                var newCaretIndex = caretIndex + (formattedText.Length - originalText.Length);
+                textBox.CaretIndex = Math.Min(newCaretIndex, formattedText.Length);
+            }
+        }
+
+        private void CodeBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            var textBox = sender as TextBox;
+
+            // Разрешаем только цифры и управляющие клавиши
+            if (!(e.Key >= Key.D0 && e.Key <= Key.D9) &&
+                !(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) &&
+                e.Key != Key.Back &&
+                e.Key != Key.Delete &&
+                e.Key != Key.Left &&
+                e.Key != Key.Right)
+            {
+                e.Handled = true;
             }
         }
     }

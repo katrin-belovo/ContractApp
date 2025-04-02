@@ -17,6 +17,7 @@
                     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
                     <!-- В ресурсы App.xaml -->
                     <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
 
                     <!--STYLES MENU-->
 

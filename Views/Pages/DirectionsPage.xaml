@@ -8,7 +8,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+        <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" Cursor="">
+            <!-- Блоки уведомлений -->
+            <TextBlock x:Name="SuccessText"
+               Foreground="Green"
+               Margin="20 0"
+               VerticalAlignment="Center"
+               TextWrapping="Wrap"/>
+
+            <TextBlock x:Name="ErrorText"
+               Foreground="Red"
+               Margin="20 0"
+               VerticalAlignment="Center"
+               TextWrapping="Wrap"/>
             <Button Content="ДОБАВИТЬ"
                     Click="AddDirection_Click"
                     Style="{StaticResource MaterialDesignRaisedButton}"
@@ -18,11 +30,7 @@
                     Width="200"
                     />
 
-            <TextBlock x:Name="ErrorText"
-                       Foreground="Red"
-                       Margin="20 0"
-                       VerticalAlignment="Center"
-                       TextWrapping="Wrap"/>
+           
         </StackPanel>
 
         <DataGrid x:Name="DirectionsGrid"
@@ -33,10 +41,12 @@
                   Margin="10"
                   materialDesign:DataGridAssist.CellPadding="10 8">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Уровень" Binding="{Binding Level}" Width="100"/>
                 <DataGridTextColumn Header="Код" Binding="{Binding Code}" Width="120"/>
                 <DataGridTextColumn Header="Полное название" Binding="{Binding FullName}" Width="150"/>
                 <DataGridTextColumn Header="Короткое название" Binding="{Binding ShortName}" Width="200"/>
-
+                
+                
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

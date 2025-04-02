@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ContractApp.Views.Pages
 {
@@ -68,18 +69,54 @@ namespace ContractApp.Views.Pages
             {
                 if (await GroupRepository.HasGroupsAsync(direction.Id))
                 {
-                    ErrorText.Text = "Нельзя удалить направление с привязанными группами!";
+                    var msg = "Нельзя удалить направление с привязанными группами!";
+                    ShowNotification($"Ошибка удаления: {msg}", isError: true);
+                    
                     return;
                 }
+                // Диалог подтверждения
+                var message = $"Вы действительно хотите удалить направление {direction.Code} {direction.FullName}?";
+                var dialog = new ConfirmationDialog(message);
+                dialog.Owner = Window.GetWindow(this);
+
+                if (dialog.ShowDialog() != true) return;
+
 
                 await DirectionRepository.DeleteAsync(direction.Id);
                 await LoadDataAsync();
                 ErrorText.Text = "";
+
+                // Уведомление об успехе
+                ShowNotification($"Направление {direction.Code} успешно удалено!", isError: false);
             }
             catch (Exception ex)
             {
-                ErrorText.Text = $"Ошибка удаления: {ex.Message}";
+                ShowNotification($"Ошибка удаления: {ex.Message}", isError: true);
             }
+        }
+
+        private void ShowNotification(string message, bool isError)
+        {
+            if (isError)
+            {
+                ErrorText.Text = message;
+                SuccessText.Text = string.Empty;
+            }
+            else
+            {
+                SuccessText.Text = message;
+                ErrorText.Text = string.Empty;
+            }
+
+            // Автоочистка через 3 секунды
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+            timer.Tick += (s, e) =>
+            {
+                ErrorText.Text = string.Empty;
+                SuccessText.Text = string.Empty;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }
