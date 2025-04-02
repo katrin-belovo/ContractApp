@@ -1,4 +1,5 @@
-﻿using ContractApp.Utilities;
+﻿using ContractApp.Infrastructure;
+using ContractApp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +26,28 @@ namespace ContractApp.Views
             InitializeComponent();
         }
 
-        private void Login_Click(object sender, RoutedEventArgs e)
+        private async void Login_Click(object sender, RoutedEventArgs e)
         {
-            if (RegistryHelper.ValidatePassword(PasswordBox.Password))
+
+            try
             {
-                new MainWindow().Show();
-                this.Close();
+                // Ваша проверка авторизации...
+                if (RegistryHelper.ValidatePassword(PasswordBox.Password))
+                {
+                    await DatabaseService.InitializeDatabaseAsync();
+                    new MainWindow().Show();
+                    this.Close();
+                }
+                else
+                {
+                    ErrorMessage.Text = "Неверный пароль! Повторите попытку";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ErrorMessage.Text = "Неверный пароль! Повторите попытку";
+                ErrorMessage.Text = ex.Message;
             }
+            
         }
     }
 }

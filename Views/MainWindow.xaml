@@ -138,7 +138,7 @@
         </Grid>
 
         <!-- Восстанавливаем оригинальное меню -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FFF">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FFF" Margin="10">
             <!-- Меню "Договоры" -->
 
             <Grid>
