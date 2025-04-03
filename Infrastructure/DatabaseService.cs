@@ -56,7 +56,13 @@ namespace ContractApp.Infrastructure
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Name TEXT NOT NULL,
                 DirectionId INTEGER NOT NULL,
-                FOREIGN KEY(DirectionId) REFERENCES Directions(Id) ON DELETE CASCADE)"
+                FOREIGN KEY(DirectionId) REFERENCES Directions(Id) ON DELETE CASCADE)",
+            @"CREATE TABLE TuitionFees (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Year INTEGER NOT NULL,
+                DirectionId INTEGER NOT NULL,
+                Amount REAL NOT NULL,
+                FOREIGN KEY(DirectionId) REFERENCES Directions(Id))"
         };
 
             foreach (var sql in createTables)

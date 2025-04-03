@@ -137,5 +137,17 @@ namespace ContractApp.Infrastructure
             }
         }
 
+
+        public static async Task<bool> HasAnyDirectionsAsync()
+        {
+            using var connection = new SqliteConnection("Data Source=contracts.db");
+            await connection.OpenAsync();
+
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT COUNT(*) FROM Directions";
+
+            return (long)await command.ExecuteScalarAsync() > 0;
+        }
+
     }
 }

@@ -1,0 +1,69 @@
+﻿<Window x:Class="ContractApp.Views.EditTuitionFeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Редактирование стоимости"
+        WindowStartupLocation="CenterScreen"
+        Height="320" 
+        Width="450">
+    <!-- Увеличиваем ширину окна -->
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Направление -->
+        <ComboBox Grid.Row="0"
+                  x:Name="DirectionsCombo"
+                  materialDesign:HintAssist.Hint="Направление"
+                  DisplayMemberPath="FullName"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding DirectionId}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Margin="0 0 0 15"
+                  HorizontalAlignment="Stretch"/>
+        <!-- Растягиваем на всю ширину -->
+
+        <!-- Год набора -->
+        <ComboBox Grid.Row="1"
+                  x:Name="YearCombo"
+                  materialDesign:HintAssist.Hint="Год набора"
+                  SelectedValue="{Binding Year}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Margin="0 0 0 15"
+                  HorizontalAlignment="Stretch"/>
+
+        <!-- Стоимость -->
+        <TextBox materialDesign:HintAssist.Hint="Стоимость за семестр"
+                 Grid.Row="2"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+         Text="{Binding Amount, StringFormat=N2}"
+         Margin="0 10"
+         GotFocus="AmountTextBox_GotFocus"
+         PreviewTextInput="AmountTextBox_PreviewTextInput"
+         LostFocus="AmountTextBox_LostFocus"
+         Language="ru-RU"/>
+
+        <!-- Кнопка сохранения -->
+        <Button Grid.Row="3"
+                Content="СОХРАНИТЬ"
+                Click="Save_Click"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Background="#7400b8"
+                Foreground="White"
+                HorizontalAlignment="Stretch"
+                Margin="0 0 0 10"/>
+
+        <!-- Блок ошибок -->
+        <TextBlock Grid.Row="4"
+                   x:Name="ErrorText"
+                   Foreground="Red"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

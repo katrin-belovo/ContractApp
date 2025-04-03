@@ -224,12 +224,23 @@
                                 </StackPanel>
                             </Button>
                             <Button Style="{StaticResource SubMenuItem}"
+                                    x:Name="GroupsButton"
                         Click="ShowGroups"
                         Tag="GroupsPage">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="AccountGroup" Margin="0 0 8 0"/>
                                     <TextBlock Text="Управление группами"/>
                                 </StackPanel>
+                            </Button>
+
+                            <Button Style="{StaticResource SubMenuItem}"
+                               x:Name="TuitionFeesButton"     
+                                Click="ShowTuitionFees"
+                                Tag="TuitionFeesPage">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Cash" Margin="0 0 8 0"/>
+                                <TextBlock Text="Стоимость обучения"/>
+                            </StackPanel>
                             </Button>
                         </StackPanel>
                     </Border>

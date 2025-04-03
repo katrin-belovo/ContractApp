@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContractApp.Infrastructure;
 using ContractApp.Views;
 using ContractApp.Views.Pages;
 using MaterialDesignThemes.Wpf;
@@ -96,10 +97,22 @@ namespace ContractApp
             DirectoriesPopup.IsOpen = false;
         }
 
-        private void ToggleDirectoriesMenu(object sender, RoutedEventArgs e)
+        private async void ToggleDirectoriesMenu(object sender, RoutedEventArgs e)
         {
             DirectoriesPopup.IsOpen = !DirectoriesPopup.IsOpen;
             ContractsPopup.IsOpen = false;
+
+            if (DirectoriesPopup.IsOpen)
+            {
+                await UpdateMenuButtonsState();
+            }
+        }
+
+        private async Task UpdateMenuButtonsState()
+        {
+            bool hasDirections = await DirectionRepository.HasAnyDirectionsAsync();
+            GroupsButton.IsEnabled = hasDirections;
+            TuitionFeesButton.IsEnabled = hasDirections;
         }
 
         // Обработчики навигации
@@ -119,7 +132,9 @@ namespace ContractApp
 
         private void ShowDirections(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DirectionsPage());
+            var page = new DirectionsPage();
+            page.DirectionChanged += async (s, args) => await UpdateMenuButtonsState();
+            MainFrame.Navigate(page);
             DirectoriesPopup.IsOpen = false;
             SetActiveButton(DirectoriesBtn);
         }
@@ -136,6 +151,13 @@ namespace ContractApp
             MainFrame.Navigate(new ContingentPage());
             SetActiveButton((Button)sender);
             SetActiveButton(ContingentBtn);
+        }
+
+        private void ShowTuitionFees(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new TuitionFeesPage());
+            DirectoriesPopup.IsOpen = false;
+            SetActiveButton(DirectoriesBtn);
         }
 
 

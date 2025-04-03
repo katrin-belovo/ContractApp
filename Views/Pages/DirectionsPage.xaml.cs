@@ -23,6 +23,7 @@ namespace ContractApp.Views.Pages
     /// </summary>
     public partial class DirectionsPage : Page
     {
+        public event EventHandler? DirectionChanged;
         public DirectionsPage()
         {
             InitializeComponent();
@@ -48,6 +49,7 @@ namespace ContractApp.Views.Pages
             if (window.ShowDialog() == true)
             {
                 await LoadDataAsync();
+                RaiseDirectionChanged();
             }
         }
 
@@ -58,6 +60,7 @@ namespace ContractApp.Views.Pages
             if (window.ShowDialog() == true)
             {
                 await LoadDataAsync();
+                RaiseDirectionChanged();
             }
         }
 
@@ -86,6 +89,8 @@ namespace ContractApp.Views.Pages
                 await LoadDataAsync();
                 ErrorText.Text = "";
 
+                await LoadDataAsync();
+                RaiseDirectionChanged();
                 // Уведомление об успехе
                 ShowNotification($"Направление {direction.Code} успешно удалено!", isError: false);
             }
@@ -118,5 +123,11 @@ namespace ContractApp.Views.Pages
             };
             timer.Start();
         }
+
+        private void RaiseDirectionChanged()
+        {
+            DirectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+       
     }
 }
