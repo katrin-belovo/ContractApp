@@ -62,7 +62,15 @@ namespace ContractApp.Infrastructure
                 Year INTEGER NOT NULL,
                 DirectionId INTEGER NOT NULL,
                 Amount REAL NOT NULL,
-                FOREIGN KEY(DirectionId) REFERENCES Directions(Id))"
+                FOREIGN KEY(DirectionId) REFERENCES Directions(Id))",
+            @"CREATE TABLE ContractSettings (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Position TEXT NOT NULL,
+                FullName TEXT NOT NULL,
+                ProxyNumber TEXT NOT NULL,
+                ProxyDate DATETIME NOT NULL,
+                IsActive INTEGER NOT NULL CHECK (IsActive IN (0, 1))
+            );"
         };
 
             foreach (var sql in createTables)

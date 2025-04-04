@@ -1,0 +1,50 @@
+﻿<Window x:Class="ContractApp.Views.EditContractSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Редактирование настроек договора"
+        WindowStartupLocation="CenterScreen"
+        Height="400" 
+        Width="400">
+    <Grid Margin="20">
+        <StackPanel>
+            <ComboBox x:Name="PositionCombo"
+                      materialDesign:HintAssist.Hint="Должность"
+                      SelectedItem="{Binding Position}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+            <TextBox materialDesign:HintAssist.Hint="ФИО руководителя"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Text="{Binding FullName}"
+                     Margin="0 10"/>
+            <TextBox materialDesign:HintAssist.Hint="Номер доверенности"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Text="{Binding ProxyNumber}"
+                     Margin="0 10"/>
+            <DatePicker materialDesign:HintAssist.Hint="Дата доверенности"
+                    SelectedDate="{Binding ProxyDate, Mode=TwoWay}"
+                    DisplayDateStart="2000-01-01"
+                    DisplayDateEnd="{x:Static sys:DateTime.Now}"
+                    IsTodayHighlighted="True"
+                    FirstDayOfWeek="Monday"
+                    Language="ru-RU"
+                    PreviewTextInput="DatePicker_PreviewTextInput"
+                    SelectedDateChanged="DatePicker_SelectedDateChanged"
+                    SelectedDateFormat="Short"
+                    Margin="0 10"/>
+            <CheckBox x:Name="IsActiveCheckBox"
+                      Content="Активно"
+                      IsChecked="{Binding IsActive}"
+                      Margin="0 10"/>
+            <Button Content="СОХРАНИТЬ"
+                    Click="Save_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Background="#7400b8"
+                    Foreground="White"
+                    Margin="0 20"/>
+            <TextBlock x:Name="ErrorText"
+                       Foreground="Red"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
+    </Grid>
+</Window>

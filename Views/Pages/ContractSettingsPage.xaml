@@ -1,14 +1,64 @@
 ﻿<Page x:Class="ContractApp.Views.Pages.ContractSettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ContractApp.Views.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ContractSettingsPage">
-
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid>
-        <TextBlock Text="Настройки договоров" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="SuccessText"
+                   Foreground="Green"
+                   Margin="20 0"
+                   VerticalAlignment="Center"
+                   TextWrapping="Wrap"/>
+        <TextBlock x:Name="ErrorText"
+                   Foreground="Red"
+                   Margin="20 0"
+                   VerticalAlignment="Center"
+                   TextWrapping="Wrap"/>
+        <Button Content="ДОБАВИТЬ НАСТРОЙКУ"
+                Click="AddSetting_Click"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Background="#FFA479BD"
+                Foreground="White"
+                Padding="20 5"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Width="200"/>
+        <DataGrid x:Name="SettingsGrid"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  Margin="10"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Position}"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"/>
+                <DataGridTextColumn Header="Номер доверенности" Binding="{Binding ProxyNumber}"/>
+                <DataGridTextColumn Header="Дата доверенности" Binding="{Binding ProxyDate, StringFormat=d}"/>
+                <DataGridCheckBoxColumn Header="Активно" Binding="{Binding IsActive}" IsReadOnly="True"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="АКТИВИРОВАТЬ"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Background="Transparent"
+                                    Foreground="Green"
+                                    Click="Activate_Click"
+                                    Visibility="{Binding IsActive, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                <Button Content="УДАЛИТЬ"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Click="Delete_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

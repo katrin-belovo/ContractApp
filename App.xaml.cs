@@ -3,6 +3,7 @@ using ContractApp.Views;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace ContractApp
 {
@@ -14,6 +15,14 @@ namespace ContractApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru-RU");
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    XmlLanguage.GetLanguage(System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag)));
 
             if (!RegistryHelper.IsPasswordSet())
             {
