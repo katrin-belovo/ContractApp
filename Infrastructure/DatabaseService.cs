@@ -69,8 +69,76 @@ namespace ContractApp.Infrastructure
                 FullName TEXT NOT NULL,
                 ProxyNumber TEXT NOT NULL,
                 ProxyDate DATETIME NOT NULL,
-                IsActive INTEGER NOT NULL CHECK (IsActive IN (0, 1))
-            );"
+                IsActive INTEGER NOT NULL CHECK (IsActive IN (0, 1)))",
+            @"CREATE TABLE Contracts (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Number TEXT NOT NULL UNIQUE,
+                    CreationDate TEXT NOT NULL,
+                    ConclusionDate TEXT,
+                    TerminationDate TEXT,
+                    Status TEXT NOT NULL
+                )",
+
+                @"CREATE TABLE BilateralContracts (
+                    Id INTEGER PRIMARY KEY,
+                    StudentId INTEGER NOT NULL,
+                    FOREIGN KEY(Id) REFERENCES Contracts(Id),
+                    FOREIGN KEY(StudentId) REFERENCES Students(Id)
+                )",
+
+                @"CREATE TABLE TrilateralContracts (
+                    Id INTEGER PRIMARY KEY,
+                    StudentId INTEGER NOT NULL,
+                    RepresentativeId INTEGER NOT NULL,
+                    FOREIGN KEY(Id) REFERENCES Contracts(Id),
+                    FOREIGN KEY(StudentId) REFERENCES Students(Id),
+                    FOREIGN KEY(RepresentativeId) REFERENCES Representatives(Id)
+                )",
+
+                @"CREATE TABLE OrganizationContracts (
+                    Id INTEGER PRIMARY KEY,
+                    StudentId INTEGER NOT NULL,
+                    OrganizationId INTEGER NOT NULL,
+                    FOREIGN KEY(Id) REFERENCES Contracts(Id),
+                    FOREIGN KEY(StudentId) REFERENCES Students(Id),
+                    FOREIGN KEY(OrganizationId) REFERENCES Organizations(Id)
+                )",
+
+                @"CREATE TABLE Students (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    LastName TEXT NOT NULL,
+                    FirstName TEXT NOT NULL,
+                    MiddleName TEXT,
+                    PassportSeries TEXT NOT NULL,
+                    PassportNumber TEXT NOT NULL,
+                    Snils TEXT,
+                    Inn TEXT,
+                    Phone TEXT,
+                    Address TEXT,
+                    BirthDate TEXT NOT NULL,
+                    EducationBase TEXT NOT NULL
+                )",
+
+                @"CREATE TABLE Representatives (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    LastName TEXT NOT NULL,
+                    FirstName TEXT NOT NULL,
+                    MiddleName TEXT,
+                    PassportSeries TEXT NOT NULL,
+                    PassportNumber TEXT NOT NULL,
+                    Inn TEXT,
+                    Snils TEXT,
+                    Phone TEXT
+                )",
+
+                @"CREATE TABLE Organizations (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Name TEXT NOT NULL,
+                    Inn TEXT NOT NULL,
+                    Kpp TEXT,
+                    Address TEXT,
+                    Phone TEXT
+                )"
         };
 
             foreach (var sql in createTables)

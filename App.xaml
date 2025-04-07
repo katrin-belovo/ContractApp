@@ -19,6 +19,7 @@
                     <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
                     <local:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+                    <local:StatusToBoolConverter x:Key="StatusToBoolConverter"/>
 
                     <!--STYLES MENU-->
 
