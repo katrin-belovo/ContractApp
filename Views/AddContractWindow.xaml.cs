@@ -226,7 +226,7 @@ namespace ContractApp.Views
             FoundStudent = student;
             FoundStudentBlock.Visibility = Visibility.Visible;
             StudentEditControl.Visibility = Visibility.Collapsed;
-            FoundStudentBlock.DataContext = FoundStudent;
+            UpdateUIAfterSave();
             UpdateAvailableDirections();
         }
 
@@ -235,6 +235,7 @@ namespace ContractApp.Views
             FoundRepresentative = representative;
             FoundRepresentativeBlock.Visibility = Visibility.Visible;
             RepresentativeEditControl.Visibility = Visibility.Collapsed;
+            UpdateUIAfterSave();
         }
 
         private async void Save_Click(object sender, RoutedEventArgs e)
@@ -308,6 +309,24 @@ namespace ContractApp.Views
             catch (Exception ex)
             {
                 ErrorText.Text = $"Ошибка при сохранении: {ex.Message}";
+            }
+        }
+
+
+        private void UpdateUIAfterSave()
+        {
+            if (FoundStudent != null)
+            {
+                FoundStudentBlock.Visibility = Visibility.Visible;
+                StudentEditControl.Visibility = Visibility.Collapsed;
+                FoundStudentBlock.DataContext = FoundStudent;
+            }
+
+            if (FoundRepresentative != null)
+            {
+                FoundRepresentativeBlock.Visibility = Visibility.Visible;
+                RepresentativeEditControl.Visibility = Visibility.Collapsed;
+                FoundRepresentativeBlock.DataContext = FoundRepresentative;
             }
         }
 
